@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if app.user %}
+        <table class="table">
+            {{ form_start(modifForm) }}
+            <thead>
+                <tr>
+                    <th scope="col"><h1>{{ app.user.username }}</h1></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Description</th>
+                        <td>{{ form_widget(modifForm.description) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+        <a class="btn btn-primary" href="{{ path('profile')}}">Annuler</a>
+
+        {{ form_end(modifForm) }}
+    {% else %}
+        <h1>Vous devez vous inscrire ou vous connecter pour accéder à cette page</h1>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <a class="btn btn-primary mr-sm-2 btn-lg btn-block" href="{{ path('inscription') }}">Inscription</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <a class="btn btn-primary mr-sm-2 btn-lg btn-block" href="{{ path('app_login') }}">Connexion</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

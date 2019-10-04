@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if app.user %}
+    <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Tu dois faire un cadeau à : </div>
+        <div class="card-body">
+          <h4 class="card-title">{{ app.user.getUsername }}</h4>
+          <p class="card-text">{{ app.user.getDescription }}</p>
+        </div>
+      </div>
+        {% if app.user.fichier is null %}
+            <p class="text-primary">Vous n'avez pas encore envoyé votre cadeau !</p>
+            <div class="form-group">
+                {{ form(uploadForm)}}
+            </div>
+        {% else %}
+            <p class="text-success">Vous avez envoyé votre cadeau !</p>
+            <p>S'il s'agit d'une image vous pouvez en avoir un apercus ici, sinon vous pouvez le télécharger !</p>
+            <img src="/uploads/{{ app.user.fichier }}" height="400px">
+            <a href="/uploads//{{ app.user.fichier }}">Télécharger</a>
+        {% endif %}
+    {% else %}
+        <h1>Vous devez vous inscrire ou vous connecter pour accéder à cette page</h1>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <a class="btn btn-primary mr-sm-2 btn-lg btn-block" href="{{ path('inscription') }}">Inscription</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <a class="btn btn-primary mr-sm-2 btn-lg btn-block" href="{{ path('app_login') }}">Connexion</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

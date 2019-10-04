@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bienvenue sur le site du secret santa du Renareich !</h1>
+    <br>
+    <p>Et oui, cette année on a vu les choses en grand !</p>
+    <p>Kazu en avait marre de voir ses DM spammé parce que personne comprend rien à cet event … </p>
+    <p>Je vous invite donc à rejoindre l’onglet "<a href="{{ path('instructions') }}">Instructions</a>" qui vous résume tout ce qu’il faut savoir pour participer au Secret Santa de cette année dans les meilleures conditions !</p>
+    <br>
+    <br>
+    <br>
+    {% if app.user is same as(null) %}
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <a class="btn btn-primary mr-sm-2 btn-lg btn-block" href="{{ path('inscription') }}">Inscription</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <a class="btn btn-primary mr-sm-2 btn-lg btn-block" href="{{ path('app_login') }}">Connexion</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

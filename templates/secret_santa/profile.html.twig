@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if app.user %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"><h1>{{ app.user.username }}</h1></th>
+                    <th scope="col"><a href="{{path('profile_edit')}}")>Modifier</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-active">
+                    <th scope="row">Pseudo</th>
+                        <td>{{ app.user.username }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Description</th>
+                    {% if app.user.description is null %}
+                        <td>Clique sur "Modifier" pour ajouter une descrpition de quelques lignes, ça permettra à ton père noël secret de mieux te connaître !</td>
+                    {% else %}
+                        <td>{{ app.user.description }}</td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <h1>Vous devez vous inscrire ou vous connecter pour accéder à cette page</h1>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <a class="btn btn-primary mr-sm-2 btn-lg btn-block" href="{{ path('inscription') }}">Inscription</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <a class="btn btn-primary mr-sm-2 btn-lg btn-block" href="{{ path('app_login') }}">Connexion</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
