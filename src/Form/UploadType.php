@@ -20,7 +20,7 @@ class UploadType extends AbstractType
                 'data_class' => null
             ])
             ->add('image', HiddenType::class)
-            ->add('submit', SubmitType::class)
+            ->add('Envoyer', SubmitType::class)
         ;
     }
 
