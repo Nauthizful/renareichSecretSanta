@@ -70,23 +70,41 @@ class SecretSantaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $upload->getFichier();
-                $fileName = md5(uniqId()).'.'.$file->guessExtension();
-                $file->move($this->getParameter('upload_directory'), $fileName);
-                $upload->setFichier($fileName);
 
-                if ($file->guessExtension() == "jpg"){
-                    $upload->setImage(true);
-                }
+            if ($file->guessExtension() == "jpg"){
+                $upload->setImage(true);
+            }
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($upload);
-                $entityManager->flush();
+            $fileName = md5(uniqId()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('upload_directory'), $fileName);
+            $upload->setFichier($fileName);
 
-                return $this->redirectToRoute('rena_home');
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($upload);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('rena_home');
         }
 
         return $this->render('secret_santa/envoie.html.twig', [
             'uploadForm' => $form->createView()
         ]);
+    }
+
+
+    /**
+     * @Route("delete/", name="supprimer")
+     */
+    public function suppression(){
+        $suppr = $this->getUser();
+
+        $suppr->setFichier(NULL);
+        $suppr->setImage(NULL);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($suppr);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('envoie');
     }
 }
