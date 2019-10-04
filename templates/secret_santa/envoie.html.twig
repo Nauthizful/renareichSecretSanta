@@ -12,13 +12,14 @@
         {% if app.user.fichier is null %}
             <p class="text-primary">Vous n'avez pas encore envoyé votre cadeau !</p>
             <div class="form-group">
-                {{ form(uploadForm)}}
+                {{ form(uploadForm) }}
             </div>
         {% else %}
             <p class="text-success">Vous avez envoyé votre cadeau !</p>
-            <p>S'il s'agit d'une image vous pouvez en avoir un apercus ici, sinon vous pouvez le télécharger !</p>
             <img src="/uploads/{{ app.user.fichier }}" height="400px">
-            <a href="/uploads//{{ app.user.fichier }}">Télécharger</a>
+            <br>
+            <br>
+            <a type="button" class="btn btn-primary" href="{{ path('supprimer') }}">Supprimer</a>
         {% endif %}
     {% else %}
         <h1>Vous devez vous inscrire ou vous connecter pour accéder à cette page</h1>
