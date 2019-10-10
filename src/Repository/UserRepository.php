@@ -47,4 +47,18 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getUserById($id){
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT username, description
+            FROM User
+            WHERE id = :id
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetchAll();
+    }
 }

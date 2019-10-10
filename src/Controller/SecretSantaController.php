@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Upload;
 use App\Form\ModifType;
 use App\Form\UploadType;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,9 +63,13 @@ class SecretSantaController extends AbstractController
     /**
      * @Route("/cadeau", name="envoie")
      */
-    public function envoie(Request $request){
+    public function envoie(Request $request, UserRepository $userRep){
+
         $upload = $this->getUser();
         $upload->setImage(false);
+
+        $enfant = $userRep->getUserById($upload->getEnfant());
+
         $form = $this->createForm(UploadType::class, $upload);
         $form->handleRequest($request);
 
@@ -87,7 +92,9 @@ class SecretSantaController extends AbstractController
         }
 
         return $this->render('secret_santa/envoie.html.twig', [
-            'uploadForm' => $form->createView()
+            'uploadForm' => $form->createView(),
+            'enfant_username'=> $enfant[0]["username"],
+            'enfant_description'=>$enfant[0]["description"]
         ]);
     }
 
